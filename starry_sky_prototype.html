@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星空寄语 - 首页原型</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .app-container {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #0A1128 0%, #1E2749 50%, #2E3856 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 背景星星 */
+        .background-stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .bg-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* 内容区域 */
+        .content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            padding: 60px 24px 100px;
+            overflow-y: auto;
+        }
+
+        /* 标题区域 */
+        .header {
+            margin-bottom: 40px;
+        }
+
+        .title {
+            font-size: 32px;
+            font-weight: 300;
+            color: white;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            letter-spacing: 1px;
+        }
+
+        /* 统计卡片 */
+        .stats-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .stat-item {
+            text-align: center;
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 600;
+            color: #FFD700;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* 筛选按钮 */
+        .filter-chips {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .filter-chip {
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-chip.active {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: #FFD700;
+            color: #FFD700;
+        }
+
+        .filter-chip:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* 星空区域 */
+        .starry-sky {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            margin-bottom: 40px;
+        }
+
+        /* 纪念星星 */
+        .memorial-star {
+            position: absolute;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .memorial-star:hover {
+            transform: scale(1.1);
+        }
+
+        .star-glow {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 8px;
+        }
+
+        .star-circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: float 3s ease-in-out infinite, pulse 2s ease-in-out infinite;
+        }
+
+        .person-star .star-circle {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 215, 0, 0.3);
+        }
+
+        .pet-star .star-circle {
+            background: linear-gradient(135deg, #87CEEB 0%, #98FB98 100%);
+            box-shadow: 0 0 20px rgba(135, 206, 235, 0.6), 0 0 40px rgba(135, 206, 235, 0.3);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 20px currentColor, 0 0 40px currentColor;
+                opacity: 0.8;
+            }
+            50% {
+                box-shadow: 0 0 30px currentColor, 0 0 60px currentColor;
+                opacity: 1;
+            }
+        }
+
+        .star-icon {
+            font-size: 24px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        .star-name {
+            font-size: 14px;
+            color: white;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+            white-space: nowrap;
+        }
+
+        /* 连接线 */
+        .constellation-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .constellation-line {
+            stroke: rgba(255, 215, 0, 0.3);
+            stroke-width: 1;
+        }
+
+        /* 浮动按钮 */
+        .fab {
+            position: fixed;
+            bottom: 120px;
+            right: 24px;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(255, 215, 0, 0.6);
+        }
+
+        .fab-icon {
+            font-size: 32px;
+            color: #0A1128;
+        }
+
+        /* 底部导航栏 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: #1E2749;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 8px 16px;
+        }
+
+        .nav-item.active {
+            color: #FFD700;
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            transition: font-size 0.3s;
+        }
+
+        .nav-item.active .nav-icon {
+            font-size: 28px;
+        }
+
+        .nav-label {
+            font-size: 12px;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .content {
+                padding: 40px 16px 100px;
+            }
+
+            .title {
+                font-size: 28px;
+            }
+
+            .stat-number {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 背景星星 -->
+        <div class="background-stars" id="bgStars"></div>
+
+        <!-- 内容区域 -->
+        <div class="content">
+            <!-- 标题 -->
+            <div class="header">
+                <h1 class="title">星空寄语</h1>
+                <p class="subtitle">每一颗星星都是永恒的记忆</p>
+            </div>
+
+            <!-- 统计卡片 -->
+            <div class="stats-card">
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <div class="stat-number">6</div>
+                        <div class="stat-label">纪念对象</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">4</div>
+                        <div class="stat-label">亲人</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">2</div>
+                        <div class="stat-label">宠物</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 筛选按钮 -->
+            <div class="filter-chips">
+                <div class="filter-chip active">全部</div>
+                <div class="filter-chip">亲人</div>
+                <div class="filter-chip">宠物</div>
+            </div>
+
+            <!-- 星空区域 -->
+            <div class="starry-sky">
+                <!-- 连接线 -->
+                <svg class="constellation-lines" id="constellationSvg">
+                    <line class="constellation-line" x1="15%" y1="20%" x2="45%" y2="15%"></line>
+                    <line class="constellation-line" x1="45%" y1="15%" x2="70%" y2="30%"></line>
+                    <line class="constellation-line" x1="25%" y1="60%" x2="55%" y2="70%"></line>
+                    <line class="constellation-line" x1="70%" y1="30%" x2="85%" y2="65%"></line>
+                </svg>
+
+                <!-- 纪念星星 -->
+                <div class="memorial-star person-star" style="left: 15%; top: 20%;">
+                    <div class="star-glow">
+                        <div class="star-circle">
+                            <span class="star-icon">👤</span>
+                        </div>
+                    </div>
+                    <div class="star-name">奶奶</div>
+                </div>
+
+                <div class="memorial-star person-star" style="left: 45%; top: 15%;">
+                    <div class="star-glow">
+                        <div class="star-circle">
+                            <span class="star-icon">👤</span>
+                        </div>
+                    </div>
+                    <div class="star-name">爷爷</div>
+                </div>
+
+                <div class="memorial-star person-star" style="left: 70%; top: 30%;">
+                    <div class="star-glow">
+                        <div class="star-circle">
+                            <span class="star-icon">👤</span>
+                        </div>
+                    </div>
+                    <div class="star-name">外公</div>
+                </div>
+
+                <div class="memorial-star person-star" style="left: 25%; top: 60%;">
+                    <div class="star-glow">
+                        <div class="star-circle">
+                            <span class="star-icon">👤</span>
+                        </div>
+                    </div>
+                    <div class="star-name">外婆</div>
+                </div>
+
+                <div class="memorial-star pet-star" style="left: 55%; top: 70%;">
+                    <div class="star-glow">
+                        <div class="star-circle">
+                            <span class="star-icon">🐾</span>
+                        </div>
+                    </div>
+                    <div class="star-name">小白</div>
+                </div>
+
+                <div class="memorial-star pet-star" style="left: 85%; top: 65%;">
+                    <div class="star-glow">
+                        <div class="star-circle">
+                            <span class="star-icon">🐾</span>
+                        </div>
+                    </div>
+                    <div class="star-name">咪咪</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 浮动按钮 -->
+        <button class="fab">
+            <span class="fab-icon">✨</span>
+        </button>
+
+        <!-- 底部导航栏 -->
+        <div class="bottom-nav">
+            <div class="nav-item active">
+                <span class="nav-icon">⭐</span>
+                <span class="nav-label">星空</span>
+            </div>
+            <div class="nav-item">
+                <span class="nav-icon">➕</span>
+                <span class="nav-label">添加</span>
+            </div>
+            <div class="nav-item">
+                <span class="nav-icon">👤</span>
+                <span class="nav-label">我的</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 生成背景星星
+        const bgStarsContainer = document.getElementById('bgStars');
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.className = 'bg-star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 2 + 's';
+            bgStarsContainer.appendChild(star);
+        }
+
+        // 筛选按钮交互
+        const filterChips = document.querySelectorAll('.filter-chip');
+        filterChips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                filterChips.forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+            });
+        });
+
+        // 底部导航交互
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                navItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+
+        // 星星点击事件
+        const memorialStars = document.querySelectorAll('.memorial-star');
+        memorialStars.forEach(star => {
+            star.addEventListener('click', () => {
+                const name = star.querySelector('.star-name').textContent;
+                alert(`查看 ${name} 的纪念详情`);
+            });
+        });
+
+        // FAB点击事件
+        const fab = document.querySelector('.fab');
+        fab.addEventListener('click', () => {
+            alert('点亮新星星');
+        });
+
+        // 为每个星星添加随机延迟的动画
+        memorialStars.forEach((star, index) => {
+            const circle = star.querySelector('.star-circle');
+            circle.style.animationDelay = `${index * 0.3}s, ${index * 0.2}s`;
+        });
+    </script>
+</body>
+</html>

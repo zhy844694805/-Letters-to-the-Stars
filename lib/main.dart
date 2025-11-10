@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'starry_sky_page.dart';
+import 'main_navigation.dart';
 
 void main() {
   runApp(const HuiXiangApp());
@@ -11,7 +11,7 @@ class HuiXiangApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '回响',
+      title: '星空寄语',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
@@ -19,7 +19,7 @@ class HuiXiangApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xFF0A1128),
         fontFamily: 'PingFang SC',
       ),
-      home: const StarrySkyPage(),
+      home: const MainNavigation(),
     );
   }
 }
